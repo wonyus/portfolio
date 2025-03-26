@@ -17,6 +17,7 @@
     "@uiw/react-markdown-preview": "^5.1.3",
     "@uiw/react-md-editor": "^4.0.5",
     "@vercel/analytics": "^1.5.0",
+    "framer-motion": "^12.6.0",
     "next": "15.2.2",
     "next-remove-imports": "^1.0.12",
     "react": "^19.0.0",
