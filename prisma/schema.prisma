@@ -12,10 +12,10 @@ model Blog {
   id          String     @default(cuid()) @id
   title       String
   content     String?
-  published   Boolean @default(false)
+  published   Boolean   @default(false)
   image       String?
-  author      User?   @relation(fields: [authorId], references: [id])
-  authorId    String?
+  userId      String?    @map("user_id")  // Foreign key field
+  user        User?      @relation(fields: [userId], references: [id]) // Relation field
   tags        String[]  @default([])
   category    String[]  @default([])
   createdAt   DateTime  @default(now()) @map(name: "created_at")
@@ -25,16 +25,16 @@ model Blog {
 
 model Project {
   id                String    @default(cuid()) @id
-  name              String
+  title             String
   description       String?
   tags              String[]  @default([])
   image             String?
-  source_code_link  String?
-  live_demo_link    String?
+  sourceCodeLink    String?   @map(name: "source_code_link")
+  liveDemoLink      String?   @map(name: "live_demo_link")
   link              String?
   category          String[]  @default([])
-  author            User?     @relation(fields: [authorId], references: [id])
-  authorId          String?
+  userId            String?   @map("user_id")  // Foreign key field
+  user              User?     @relation(fields: [userId], references: [id]) // Relation field
   createdAt         DateTime  @default(now()) @map(name: "created_at")
   updatedAt         DateTime  @updatedAt @map(name: "updated_at")
   @@map(name: "projects")
