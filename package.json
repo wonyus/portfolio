@@ -24,6 +24,7 @@
     "next-remove-imports": "^1.0.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-github-calendar": "^4.5.6",
     "react-markdown": "^10.1.0"
   },
   "devDependencies": {
