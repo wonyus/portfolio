@@ -19,7 +19,7 @@ export const stacks: Stack[] = [
     {
         name: "Python",
         description:
-            "Python is a programming language that is used for building high-performance applications. It is a statically typed language that is compiled into machine code. It is a great language for building applications that need to be fast and efficient.",
+            "Python is a high-level, interpreted programming language known for its readability and versatility. It's dynamically typed and used in web development, data science, automation, and many other domains.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
     },
     {

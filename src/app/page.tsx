@@ -4,6 +4,8 @@ import { CarreerPath, carreerPath } from "./constant/CareerPath";
 import { Stack, stacks } from "./constant/Stack";
 import { iconLinks } from "./constant/IconLink";
 import GitHubCalendar from "react-github-calendar";
+import { IconButton } from "@radix-ui/themes";
+import GithubIcon from "@/components/SVGs/GithubIcon";
 
 export default function Home() {
   const MapCareerPath = ({ carreerPath }: { carreerPath: CarreerPath[] }) => {
@@ -24,7 +26,7 @@ export default function Home() {
     };
 
     return (
-      <div>
+      <div className="container">
         <h1 className="font-bold">Career Path</h1>
         <div className="flex flex-col">{carreerPath.map((career, index) => careerCard(career, index))}</div>
       </div>
@@ -47,9 +49,27 @@ export default function Home() {
     };
 
     return (
-      <div>
+      <div className="container">
         <h1 className="font-bold">Stack</h1>
-        <div className="flex flex-wrap gap-4">{stacks.map((stack, index) => stackCard(stack, index))}</div>
+        <div className="flex flex-wrap gap-4 justify-center">{stacks.map((stack, index) => stackCard(stack, index))}</div>
+      </div>
+    );
+  };
+
+  const GitContribution = () => {
+    return (
+      <div className="container">
+        <div className="flex flex-wrap gap-2">
+          <h1 className="font-bold">Github Contribution</h1>
+          <Link className="text-blue-500" href="https://github.com/wonyus" target="_blank" rel="noopener noreferrer">
+            <GithubIcon />
+          </Link>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          <div className="w-full flex justify-center">
+            <GitHubCalendar username="wonyus" />
+          </div>
+        </div>
       </div>
     );
   };
@@ -68,19 +88,7 @@ export default function Home() {
           </div>{" "}
           {MapCareerPath({ carreerPath: carreerPath })}
           {MapStack({ stacks: stacks })}
-          <div className="container">
-            <p>Github Contribution</p>
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-4">
-                <Link className="text-blue-500 underline row-start-2 pt-4" href="https://github.com/wonyus" target="_blank" rel="noopener noreferrer">
-                  GithubLink
-                </Link>
-              </div>
-              <div className="w-full flex justify-center">
-                <GitHubCalendar username="wonyus" />
-              </div>
-            </div>
-          </div>
+          {GitContribution()}
         </main>
       </div>
     </div>
