@@ -25,7 +25,7 @@ model Blog {
 
 model Project {
   id                String    @default(cuid()) @id
-  name              String
+  title             String
   description       String?
   tags              String[]  @default([])
   image             String?
