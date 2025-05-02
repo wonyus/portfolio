@@ -7,7 +7,7 @@ export default function Home() {
     const MapCareerPath = ({ carreerPath }: { carreerPath: CarreerPath[] }) => {
         const careerCard = (career: CarreerPath, index: number) => {
             return (
-                <div className="bg-tertiary p-5 rounded-2xl w-full" key={index}>
+                <div className="bg-tertiary p-3 rounded-2xl w-full" key={index}>
                     <div className="flex flex-col gap-1">
                         <div className="flex gap-1 flex-col">
                             <h3 className="font-bold">{career.organization}</h3>
@@ -23,8 +23,8 @@ export default function Home() {
 
         return (
             <div>
-                <h1>Career Path</h1>
-                <div className="flex flex-col gap-4">
+                <h1 className="font-bold">Career Path</h1>
+                <div className="flex flex-col">
                     {carreerPath.map((career, index) => careerCard(career, index))}
                 </div>
             </div>
@@ -36,7 +36,7 @@ export default function Home() {
             return (
                 <div className="bg-tertiary p-5 rounded-2xl w-[230px] h-[250px]" key={i}>
                     <div className="flex-row gap-2 items-center text-center" key={i}>
-                        <div className="flex flex-row gap-1 justify-center items-center">
+                        <div className="flex flex-row gap-1 justify-center items-center pb-1">
                             <Image src={s.icon} alt={s.name} width={40} height={40} />
                             <h3 className="font-bold">{s.name}</h3>
                         </div>
@@ -48,7 +48,7 @@ export default function Home() {
 
         return (
             <div>
-                <p>Stack</p>{" "}
+                <h1 className="font-bold">Stack</h1>
                 <div className="flex flex-wrap gap-4">{stacks.map((stack, index) => stackCard(stack, index))}</div>
             </div>
         );
