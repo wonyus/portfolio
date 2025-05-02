@@ -10,10 +10,10 @@ export default function NewProject() {
     "use server";
     const supabase = await createClient();
 
-    const name = formData.get("name") as string;
+    const title = formData.get("name") as string;
     const description = formData.get("description") as string;
-    const source_code_link = formData.get("githubUrl") as string;
-    const live_demo_link = formData.get("liveUrl") as string;
+    const sourceCodeLink = formData.get("githubUrl") as string;
+    const liveDemoLink = formData.get("liveUrl") as string;
     const image = formData.get("image") as File;
     const tags = formData.get("tags") as string;
     const tagArray = tags.split(",").map((tag) => tag.trim());
@@ -37,14 +37,14 @@ export default function NewProject() {
       }
       addImage = data;
     }
-    const imgUrl =  supabase.storage.from("projects").getPublicUrl(addImage?.path as string);
-    
+    const imgUrl = supabase.storage.from("projects").getPublicUrl(addImage?.path as string);
+
     await prisma.project.create({
       data: {
-        name,
+        title,
         description,
-        source_code_link,
-        live_demo_link,
+        sourceCodeLink,
+        liveDemoLink,
         image: imgUrl.data.publicUrl,
         tags: tagArray,
       },
