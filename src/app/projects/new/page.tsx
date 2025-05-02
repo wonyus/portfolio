@@ -60,7 +60,7 @@ export default function NewProject() {
       <Form action={createProject} className="space-y-6">
         {projectInputLists.map((input) => (
           <div key={input.name}>
-            <label htmlFor={input.name} className="mb-2 block text-lg font-medium text-gray-900">
+            <label htmlFor={input.name} className="mb-2 block text-lg font-medium text-gray-200">
               {input.label}
             </label>
             <input

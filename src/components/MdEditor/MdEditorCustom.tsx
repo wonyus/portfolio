@@ -27,7 +27,6 @@ const title3 = {
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor").then((mod) => mod.default), { ssr: true });
 
-// console.log(commands);
 const {} = commands;
 
 export interface MdEditorCustomProps {

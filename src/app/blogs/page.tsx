@@ -18,7 +18,7 @@ const Blogs = () => {
     const mappedBlogs = response.data.map((blog) => ({
       id: blog.id,
       title: blog.title || "",
-      description: blog.content || "",
+      description: blog.description || "",
       tags: blog.tags,
       image: blog.image || "",
       category: filter,
@@ -34,7 +34,7 @@ const Blogs = () => {
       setMounted(true);
     };
     initializeBlogs();
-  });
+  }, []); // Add dependency array to prevent infinite loop
 
   const handleFilterClick = async (filter: string) => {
     setActiveFilter(filter);
@@ -44,16 +44,18 @@ const Blogs = () => {
 
   const handlePrevPage = async () => {
     if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-      const blogs = await fetchAndMapBlogs(currentPage, itemsPerPage, activeFilter);
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      const blogs = await fetchAndMapBlogs(newPage, itemsPerPage, activeFilter);
       setFilteredBlogs(blogs);
     }
   };
 
   const handleNextPage = async () => {
     if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-      const blogs = await fetchAndMapBlogs(currentPage, itemsPerPage, activeFilter);
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      const blogs = await fetchAndMapBlogs(newPage, itemsPerPage, activeFilter);
       setFilteredBlogs(blogs);
     }
   };

@@ -46,16 +46,18 @@ const Projects = () => {
 
   const handlePrevPage = async () => {
     if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-      const projects = await fetchAndMapProjects(currentPage, itemsPerPage, activeFilter);
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      const projects = await fetchAndMapProjects(newPage, itemsPerPage, activeFilter);
       setFilteredProjects(projects);
     }
   };
 
   const handleNextPage = async () => {
     if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-      const projects = await fetchAndMapProjects(currentPage, itemsPerPage, activeFilter);
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      const projects = await fetchAndMapProjects(newPage, itemsPerPage, activeFilter);
       setFilteredProjects(projects);
     }
   };

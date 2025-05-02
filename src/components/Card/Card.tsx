@@ -19,7 +19,9 @@ export const Card = ({ id, title, description, tags, image, sourceCodeLink, live
   return (
     <div className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full">
       <div className="relative w-full h-[230px]">
-        <Image src={image} alt={title} width={200} height={200} sizes="xl" loading="lazy" className="w-full h-full object-cover rounded-2xl" />
+        {image.length !== 0 && (
+          <Image src={image} alt={title} width={200} height={200} sizes="xl" loading="lazy" className="w-full h-full object-cover rounded-2xl" />
+        )}
         {sourceCodeLink || liveDemoLink ? (
           <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
             {sourceCodeLink && (

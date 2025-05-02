@@ -9,12 +9,19 @@ export const blogInputList: InputListProps[] = [
     required: true,
   },
   {
+    label: "Short Content",
+    type: "text",
+    name: "description",
+    placeholder: "Enter blog short content",
+    required: true,
+  },
+  {
     label: "Image",
     type: "file",
     name: "image",
     accept: "image/*",
     placeholder: "Enter blog image",
-    required: true,
+    required: false,
   },
   {
     label: "Content",

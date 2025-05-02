@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -9,44 +10,48 @@ datasource db {
 }
 
 model Blog {
-  id          String     @default(cuid()) @id
+  id          String   @id @default(cuid())
   title       String
+  description String
   content     String?
-  published   Boolean   @default(false)
+  published   Boolean  @default(false)
   image       String?
-  userId      String?    @map("user_id")  // Foreign key field
-  user        User?      @relation(fields: [userId], references: [id]) // Relation field
-  tags        String[]  @default([])
-  category    String[]  @default([])
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
-  @@map(name: "blogs")
+  userId      String?  @map("user_id")
+  tags        String[] @default([])
+  category    String[] @default([])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@map("blogs")
 }
 
 model Project {
-  id                String    @default(cuid()) @id
-  title             String
-  description       String?
-  tags              String[]  @default([])
-  image             String?
-  sourceCodeLink    String?   @map(name: "source_code_link")
-  liveDemoLink      String?   @map(name: "live_demo_link")
-  link              String?
-  category          String[]  @default([])
-  userId            String?   @map("user_id")  // Foreign key field
-  user              User?     @relation(fields: [userId], references: [id]) // Relation field
-  createdAt         DateTime  @default(now()) @map(name: "created_at")
-  updatedAt         DateTime  @updatedAt @map(name: "updated_at")
-  @@map(name: "projects")
+  id             String   @id @default(cuid())
+  description    String?
+  tags           String[] @default([])
+  image          String?
+  sourceCodeLink String?  @map("source_code_link")
+  liveDemoLink   String?  @map("live_demo_link")
+  link           String?
+  category       String[] @default([])
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  userId         String?  @map("user_id")
+  title          String
+  user           User?    @relation(fields: [userId], references: [id])
+
+  @@map("projects")
 }
 
 model User {
-  id            String    @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  blogs         Blog[]
-  projects      Project[]
-  @@map(name: "users")
+  id        String    @id @default(cuid())
+  name      String?
+  email     String?   @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  blogs     Blog[]
+  projects  Project[]
+
+  @@map("users")
 }

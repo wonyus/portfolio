@@ -23,11 +23,11 @@ export default function NewBlog() {
       <Form action={handleSubmit} className="space-y-6">
         {blogInputList.map((input) => (
           <div key={input.name}>
-            <label htmlFor={input.name} className="mb-2 block text-lg font-medium text-gray-900">
+            <label htmlFor={input.name} className="mb-2 block text-lg font-medium text-gray-200">
               {input.label}
             </label>
             {input.name === "content" ? (
-              <MdEditorCustom value={mdValue} onChange={(value) => setMdValue(value)} />
+              <MdEditorCustom value={mdValue} onChange={(value) => setMdValue(value)}  />
             ) : (
               <input
                 {...{
