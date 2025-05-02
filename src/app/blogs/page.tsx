@@ -17,7 +17,7 @@ const Blogs = () => {
     const response = await findBlog({ page: currentPage.toString(), limit: itemsPerPage.toString() });
     const mappedBlogs = response.data.map((blog) => ({
       id: blog.id,
-      name: blog.title || "",
+      title: blog.title || "",
       description: blog.content || "",
       tags: blog.tags,
       image: blog.image || "",

@@ -17,12 +17,12 @@ const Projects = () => {
     const response = await findProject({ page: currentPage.toString(), limit: itemsPerPage.toString() });
     const mappedProjects = response.data.map((project) => ({
       id: project.id,
-      name: project.name,
+      title: project.title,
       description: project.description || "",
       tags: project.tags,
       image: project.image || "",
-      source_code_link: project.source_code_link || "",
-      live_demo_link: project.live_demo_link || "",
+      sourceCodeLink: project.sourceCodeLink || "",
+      liveDemoLink: project.liveDemoLink || "",
       category: filter,
     }));
     setTotalPages(Math.ceil(response.meta.total / itemsPerPage));

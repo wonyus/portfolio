@@ -1,12 +1,12 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
-export default async function Post({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Post({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const project = await prisma.project.findUnique({
     where: { id: id },
     include: {
-      user: true
+      user: true,
     },
   });
 
