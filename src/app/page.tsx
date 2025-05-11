@@ -7,6 +7,11 @@ import GitHubCalendar from "react-github-calendar";
 import { IconButton } from "@radix-ui/themes";
 import GithubIcon from "@/components/SVGs/GithubIcon";
 
+/**
+ * Renders the personal portfolio homepage, displaying the user's name, social links, career path, technology stack, and GitHub contribution calendar.
+ *
+ * The page is structured with distinct sections for career history, technology stack, and GitHub activity, using imported data and components for dynamic rendering.
+ */
 export default function Home() {
   const MapCareerPath = ({ carreerPath }: { carreerPath: CarreerPath[] }) => {
     const careerCard = (career: CarreerPath, index: number) => {
