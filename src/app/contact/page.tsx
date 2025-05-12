@@ -66,6 +66,7 @@ export default function Contact() {
                     className="flex gap-3 content-baseline"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Visit LinkedIn profile"
                 >
                     <LinkedInIcon size={40} className="items-center" />
                     <div className="flex-row">
