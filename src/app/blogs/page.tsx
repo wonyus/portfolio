@@ -11,7 +11,7 @@ const Blogs = () => {
     const [mounted, setMounted] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchAndMapBlogs = async (currentPage: number, itemsPerPage: number, filter: string) => {
@@ -106,7 +106,7 @@ const Blogs = () => {
     );
 
     const contents = (
-        <div className="mt-2 flex flex-wrap gap-7">
+        <div className="mt-2 flex flex-wrap gap-2 justify-center">
             {filteredBlogs.map((blog, index) => (
                 <motion.div
                     key={`blog-${index}`}
@@ -157,7 +157,7 @@ const Blogs = () => {
                     onChange={(e) => handleItemPerPage(Number(e.target.value))}
                     className="bg-tertiary text-white  py-1 rounded-lg"
                 >
-                    {[1, 2, 3, 4, 5, 6, 12, 24].map((value) => (
+                    {[3, 4, 5, 6, 12, 24].map((value) => (
                         <option key={value} value={value} className="text-[14px]">
                             {value}
                         </option>

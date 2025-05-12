@@ -3,10 +3,10 @@ import { blogInputList } from "@/config/blogInput";
 import dynamic from "next/dynamic";
 import Form from "next/form";
 import { notFound, useParams } from "next/navigation";
-import { getBlogById, updateBlog } from "./action";
 import { useEffect, useState } from "react";
 import { InputListProps } from "@/config/interface";
 import { Blog } from "@prisma/client";
+import { getBlogById, updateBlog } from "../../action";
 
 const MdEditorCustom = dynamic(() => import("@/components/MdEditor/MdEditorCustom"), {
     ssr: false,
