@@ -19,6 +19,9 @@ export const PhoneIcon: FC<IconSvgProps> = ({
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
+            aria-hidden="false"
+            role="img"
+            aria-label="Phone icon"
         >
             <path
                 strokeLinecap="round"
