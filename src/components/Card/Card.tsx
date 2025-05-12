@@ -2,6 +2,7 @@ import Image from "next/image";
 import LinkIcon from "../SVGs/LinkIcon";
 import GithubIcon from "../SVGs/GithubIcon";
 import Link from "next/link";
+import { CardSkeleton } from "./CardSkeleton";
 
 export interface CardProps {
     id: string;
@@ -13,9 +14,14 @@ export interface CardProps {
     liveDemoLink?: string;
     link?: string;
     category: string;
+    isLoading?: boolean;
 }
 
-export const Card = ({ id, title, description, tags, image, sourceCodeLink, liveDemoLink }: CardProps) => {
+export const Card = ({ id, title, description, tags, image, sourceCodeLink, liveDemoLink, isLoading }: CardProps) => {
+    if (isLoading) {
+        return <CardSkeleton />;
+    }
+
     return (
         <div className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full">
             <Link

@@ -12,8 +12,10 @@ const Blogs = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchAndMapBlogs = async (currentPage: number, itemsPerPage: number, filter: string) => {
+        setIsLoading(true);
         const response = await findBlog({ page: currentPage.toString(), limit: itemsPerPage.toString() });
         const mappedBlogs = response.data.map((blog) => ({
             id: blog.id,
@@ -24,14 +26,17 @@ const Blogs = () => {
             category: filter,
         }));
         setTotalPages(Math.ceil(response.meta.total / itemsPerPage));
+        setIsLoading(false);
         return filter === "All" ? mappedBlogs : mappedBlogs.filter((blog) => blog.category === filter);
     };
 
     useEffect(() => {
         const initializeBlogs = async () => {
+            setIsLoading(true);
             const blogs = await fetchAndMapBlogs(currentPage, itemsPerPage, "All");
             setFilteredBlogs(blogs);
             setMounted(true);
+            setIsLoading(false);
         };
         initializeBlogs();
     }, []); // Add dependency array to prevent infinite loop
@@ -63,8 +68,10 @@ const Blogs = () => {
     const handleItemPerPage = async (number: number) => {
         setItemsPerPage(number);
         setCurrentPage(1);
+        setIsLoading(true);
         const blogs = await fetchAndMapBlogs(1, number, activeFilter);
         setFilteredBlogs(blogs);
+        setIsLoading(false);
     };
     const categories = [...filteredBlogs.map((blog) => blog.category)];
 
@@ -114,7 +121,7 @@ const Blogs = () => {
                     initial="hidden"
                     animate="show"
                 >
-                    <Card {...blog} />
+                    <Card {...blog} isLoading={isLoading} />
                 </motion.div>
             ))}
         </div>
