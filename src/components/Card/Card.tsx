@@ -2,6 +2,8 @@ import Image from "next/image";
 import LinkIcon from "../SVGs/LinkIcon";
 import GithubIcon from "../SVGs/GithubIcon";
 import Link from "next/link";
+import { CardSkeleton } from "./CardSkeleton";
+import { blogImageUrl, projectImageUrl } from "@/config/images";
 
 export interface CardProps {
     id: string;
@@ -13,27 +15,31 @@ export interface CardProps {
     liveDemoLink?: string;
     link?: string;
     category: string;
+    isLoading?: boolean;
 }
 
-export const Card = ({ id, title, description, tags, image, sourceCodeLink, liveDemoLink }: CardProps) => {
+export const Card = ({ id, title, description, tags, image, sourceCodeLink, liveDemoLink, isLoading }: CardProps) => {
+    if (isLoading) {
+        return <CardSkeleton />;
+    }
+    const img = image.length === 0 ? (sourceCodeLink ? projectImageUrl : blogImageUrl) : image;
+
     return (
-        <div className="bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full">
+        <div className="bg-tertiary p-2 rounded-2xl w-full">
             <Link
                 href={`/${sourceCodeLink ? "projects" : "blogs"}/${id}`}
-                className="bg-tertiary p-0 rounded-2xl sm:w-[360px] w-full"
+                className="bg-tertiary p-0 rounded-2xl sm:w-[280px] flex flex-col"
             >
-                <div className="relative w-full h-[230px]">
-                    {image.length !== 0 && (
-                        <Image
-                            src={image}
-                            alt={title}
-                            width={200}
-                            height={200}
-                            sizes="xl"
-                            loading="lazy"
-                            className="w-full h-full object-cover rounded-2xl"
-                        />
-                    )}
+                <div className="w-full">
+                    <Image
+                        src={img}
+                        alt={title}
+                        width={1536}
+                        height={1024}
+                        sizes="lg"
+                        loading="lazy"
+                        className="w-full object-cover rounded-2xl justify-around content-around"
+                    />
                     {sourceCodeLink || liveDemoLink ? (
                         <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
                             {sourceCodeLink && (

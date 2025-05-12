@@ -11,9 +11,11 @@ const Blogs = () => {
     const [mounted, setMounted] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchAndMapBlogs = async (currentPage: number, itemsPerPage: number, filter: string) => {
+        setIsLoading(true);
         const response = await findBlog({ page: currentPage.toString(), limit: itemsPerPage.toString() });
         const mappedBlogs = response.data.map((blog) => ({
             id: blog.id,
@@ -24,14 +26,17 @@ const Blogs = () => {
             category: filter,
         }));
         setTotalPages(Math.ceil(response.meta.total / itemsPerPage));
+        setIsLoading(false);
         return filter === "All" ? mappedBlogs : mappedBlogs.filter((blog) => blog.category === filter);
     };
 
     useEffect(() => {
         const initializeBlogs = async () => {
+            setIsLoading(true);
             const blogs = await fetchAndMapBlogs(currentPage, itemsPerPage, "All");
             setFilteredBlogs(blogs);
             setMounted(true);
+            setIsLoading(false);
         };
         initializeBlogs();
     }, []); // Add dependency array to prevent infinite loop
@@ -63,8 +68,10 @@ const Blogs = () => {
     const handleItemPerPage = async (number: number) => {
         setItemsPerPage(number);
         setCurrentPage(1);
+        setIsLoading(true);
         const blogs = await fetchAndMapBlogs(1, number, activeFilter);
         setFilteredBlogs(blogs);
+        setIsLoading(false);
     };
     const categories = [...filteredBlogs.map((blog) => blog.category)];
 
@@ -99,7 +106,7 @@ const Blogs = () => {
     );
 
     const contents = (
-        <div className="mt-2 flex flex-wrap gap-7">
+        <div className="mt-2 flex flex-wrap gap-2 justify-center">
             {filteredBlogs.map((blog, index) => (
                 <motion.div
                     key={`blog-${index}`}
@@ -114,7 +121,7 @@ const Blogs = () => {
                     initial="hidden"
                     animate="show"
                 >
-                    <Card {...blog} />
+                    <Card {...blog} isLoading={isLoading} />
                 </motion.div>
             ))}
         </div>
@@ -150,7 +157,7 @@ const Blogs = () => {
                     onChange={(e) => handleItemPerPage(Number(e.target.value))}
                     className="bg-tertiary text-white  py-1 rounded-lg"
                 >
-                    {[1, 2, 3, 4, 5, 6, 12, 24].map((value) => (
+                    {[3, 4, 5, 6, 12, 24].map((value) => (
                         <option key={value} value={value} className="text-[14px]">
                             {value}
                         </option>
