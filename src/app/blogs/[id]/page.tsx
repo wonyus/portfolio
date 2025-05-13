@@ -4,6 +4,17 @@ import remarkGfm from "remark-gfm";
 import { getBlogById } from "../action";
 import { createClient } from "@/utils/supabase/server";
 
+/**
+ * Renders a blog post page with Markdown content and an edit link for authenticated users.
+ *
+ * Awaits the blog post ID from the provided parameters, fetches the corresponding blog post, and displays its content. If the blog post does not exist, redirects to a not found page. Authenticated users are shown a link to edit the blog post.
+ *
+ * @param params - A promise resolving to an object containing the blog post ID.
+ *
+ * @returns The rendered blog post page as a React element.
+ *
+ * @remark Redirects to a not found page if the blog post with the given ID does not exist.
+ */
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const blog = await getBlogById(id);
