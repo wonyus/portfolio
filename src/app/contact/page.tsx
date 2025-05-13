@@ -17,8 +17,16 @@ export default function Contact() {
         linkedin: "https://linkedin.com/in/imronyusoh",
     };
 
+    const BorderedDiv = (props: { children: React.ReactNode }) => {
+        return (
+            <div className="flex flex-col gap-2 p-4 w-full sm:w-11/24 border border-gray-950/45 rounded-2xl outline-solid outline-red-200/5 text-shadow-lg shadow-lg">
+                {props.children}
+            </div>
+        );
+    };
+
     const first_block = (
-        <div className="flex flex-col gap-2 p-4 w-1/2 border-1 border-gray-950/45 rounded-2xl outline-solid outline-red-200/5 text-shadow-lg shadow-lg">
+        <BorderedDiv>
             <div className="flex flex-col gap-2 p-2">
                 <div className="flex flex-row gap-2">
                     <AtIcon />
@@ -41,11 +49,11 @@ export default function Contact() {
                 </div>
                 <p className="pl-6">{contact.address}</p>
             </div>
-        </div>
+        </BorderedDiv>
     );
 
     const second_block = (
-        <div className="flex flex-col gap-2 p-4 w-1/2 border-1 border-gray-950/45 rounded-2xl outline-solid outline-red-200/5 text-shadow-lg shadow-lg">
+        <BorderedDiv>
             <h2 className="font-bold">Social Links</h2>
             <div className="flex flex-col gap-4 pt-7">
                 <Link
@@ -75,16 +83,13 @@ export default function Contact() {
                     </div>
                 </Link>
             </div>
-        </div>
+        </BorderedDiv>
     );
 
     return (
-        <div className="container">
-            {/* <h1 className="font-bold opacity-90 pb-4">Contact</h1> */}
-            <div className="flex gap-4 w-full h-full pt-10">
-                {first_block}
-                {second_block}
-            </div>
+        <div className="flex flex-wrap flex-row justify-between gap-4 w-full h-full pt-10">
+            {first_block}
+            {second_block}
         </div>
     );
 }

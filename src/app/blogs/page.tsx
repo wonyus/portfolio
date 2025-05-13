@@ -4,8 +4,13 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CardProps, Card } from "@/components/Card/Card";
 import { findBlog } from "./action";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const Blogs = () => {
+    const supabase = createClient();
+    const [user, setUser] = useState<User | null>(null);
     const [activeFilter, setActiveFilter] = useState("All");
     const [filteredBlogs, setFilteredBlogs] = useState<CardProps[]>([]);
     const [mounted, setMounted] = useState(false);
@@ -13,6 +18,11 @@ const Blogs = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
     const [isLoading, setIsLoading] = useState(true);
+
+    const getUser = async () => {
+        const user = await supabase.auth.getUser();
+        setUser(user.data.user);
+    };
 
     const fetchAndMapBlogs = async (currentPage: number, itemsPerPage: number, filter: string) => {
         setIsLoading(true);
@@ -33,6 +43,7 @@ const Blogs = () => {
     useEffect(() => {
         const initializeBlogs = async () => {
             setIsLoading(true);
+            getUser();
             const blogs = await fetchAndMapBlogs(currentPage, itemsPerPage, "All");
             setFilteredBlogs(blogs);
             setMounted(true);
@@ -167,11 +178,20 @@ const Blogs = () => {
         </div>
     );
 
+    const addBlogButton = (
+        <div className="flex justify-center mt-10 ">
+            <Link href="/blogs/new">
+                <button className="bg-[#915eff] text-white py-2 px-4 rounded-lg hover:cursor-pointer">Add Blog</button>
+            </Link>
+        </div>
+    );
+
     return (
         <div className="relative z-0 min-h-full max-w-7xl mx-auto">
             <div className="flex flex-col">
                 {header}
                 {category}
+                {user && addBlogButton}
                 {contents}
                 {pagination}
             </div>
