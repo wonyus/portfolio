@@ -18,7 +18,7 @@ model Blog {
   image       String?
   userId      String?  @map("user_id")
   tags        String[] @default([])
-  category    String[] @default([])
+  categories  String[] @default([])
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   user        User?    @relation(fields: [userId], references: [id])
@@ -34,7 +34,7 @@ model Project {
   sourceCodeLink String?  @map("source_code_link")
   liveDemoLink   String?  @map("live_demo_link")
   link           String?
-  category       String[] @default([])
+  categories     String[] @default([])
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
   userId         String?  @map("user_id")
