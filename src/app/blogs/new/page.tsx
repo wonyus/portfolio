@@ -11,15 +11,19 @@ const MdEditorCustom = dynamic(() => import("@/components/MdEditor/MdEditorCusto
 
 export default function NewBlog() {
     const [mdValue, setMdValue] = useState<string>("");
+    const [errMessage, setErrorMessage] = useState<string>("");
 
     const handleSubmit = async (formData: FormData) => {
-        const content = mdValue as string;
-        await createBlog(formData, content);
+        const response = await createBlog(formData, mdValue);
+        if (response?.message) {
+            setErrorMessage(response.message);
+        }
     };
 
     return (
         <div className="mx-auto max-w-2xl p-4">
             <h1 className="mb-6 text-2xl font-bold">Create New Project</h1>
+            <p>{errMessage}</p>
             <Form action={handleSubmit} className="space-y-6">
                 {blogInputList.map((input) => (
                     <div key={input.name}>

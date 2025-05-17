@@ -4,7 +4,7 @@ export const projectInputLists: InputListProps[] = [
     {
         label: "Project Name",
         type: "text",
-        name: "name",
+        name: "title",
         placeholder: "Enter project name",
         required: true,
     },
@@ -18,14 +18,14 @@ export const projectInputLists: InputListProps[] = [
     {
         label: "Github URL",
         type: "text",
-        name: "githubUrl",
+        name: "source_code_link",
         placeholder: "Enter project github url",
         required: true,
     },
     {
         label: "Live URL",
         type: "text",
-        name: "liveUrl",
+        name: "live_demo_link",
         placeholder: "Enter project live url",
         required: false,
     },

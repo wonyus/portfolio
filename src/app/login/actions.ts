@@ -2,55 +2,58 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/utils/supabase/server";
-import { createUser, getUserByEmail } from "@/utils/prisma/user";
 
 export async function login(formData: FormData) {
-  const supabase = await createClient();
+    const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+    };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+    const { error } = await supabase.auth.signInWithPassword(data);
+    console.log(error);
+    if (error) {
+        redirect("/error");
+    }
 
-  if (error) {
-    redirect("/error");
-  }
-
-  revalidatePath("/", "layout");
-  redirect("/");
+    revalidatePath("/", "layout");
+    redirect("/");
 }
 
 export async function signup(formData: FormData) {
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+    const supabase = await createClient();
 
-  const email = await getUserByEmail(data.email);
+    const data = {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+    };
 
-  if (email) {
-    await login(formData);
-  }
+    const { data: user } = await supabase.from("users").select("email").eq("email", data.email).single();
 
-  const supabase = await createClient();
+    if (user) {
+        await login(formData);
+    }
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
 
-  const { error } = await supabase.auth.signUp(data);
+    const { error } = await supabase.auth.signUp(data);
 
-  if (error) {
-    redirect("/error");
-  }
+    if (error) {
+        redirect("/error");
+    }
 
-  await createUser({ email: data.email, name: data.email.split("@")[0] });
+    await supabase.from("users").insert({
+        id: crypto.randomUUID(),
+        email: data.email,
+        name: data.email.split("@")[0],
+        updated_at: new Date().toISOString(),
+    });
 
-  revalidatePath("/", "layout");
-  redirect("/");
+    revalidatePath("/", "layout");
+    redirect("/");
 }
