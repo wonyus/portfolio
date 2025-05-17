@@ -27,7 +27,7 @@ const Blogs = () => {
     const fetchAndMapBlogs = async (currentPage: number, itemsPerPage: number, filter: string) => {
         setIsLoading(true);
         const response = await findBlog({ page: currentPage.toString(), limit: itemsPerPage.toString() });
-        const mappedBlogs = response.data.map((blog) => ({
+        const mappedBlogs = response.data.map((blog: any) => ({
             id: blog.id,
             title: blog.title || "",
             description: blog.description || "",
@@ -37,7 +37,7 @@ const Blogs = () => {
         }));
         setTotalPages(Math.ceil(response.meta.total / itemsPerPage));
         setIsLoading(false);
-        return filter === "All" ? mappedBlogs : mappedBlogs.filter((blog) => blog.category === filter);
+        return filter === "All" ? mappedBlogs : mappedBlogs.filter((blog: any) => blog.category === filter);
     };
 
     useEffect(() => {

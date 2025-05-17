@@ -1,6 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+/**
+ * Manages user session state for incoming requests, enforcing authentication for protected routes and maintaining Supabase session consistency.
+ *
+ * Redirects unauthenticated users to the login page when accessing paths containing "/edit/" or ending with "/new". Ensures that cookies and session context are synchronized between the request and response to prevent session desynchronization.
+ *
+ * @param request - The incoming Next.js request object.
+ * @returns A NextResponse object with updated session state or a redirect to the login page if authentication is required.
+ *
+ * @remark Always returns the original response object to maintain session integrity. Modifying the response incorrectly may cause user sessions to become unsynchronized.
+ */
 export async function updateSession(request: NextRequest) {
     let supabaseResponse = NextResponse.next({
         request,

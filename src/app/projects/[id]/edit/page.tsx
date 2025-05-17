@@ -1,30 +1,20 @@
 "use client";
-import { blogInputList } from "@/config/blogInput";
-import dynamic from "next/dynamic";
 import Form from "next/form";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { InputListProps } from "@/config/interface";
-import { Blog } from "@prisma/client";
-import { getBlogById, updateBlog } from "../../action";
-
-const MdEditorCustom = dynamic(() => import("@/components/MdEditor/MdEditorCustom"), {
-    ssr: false,
-});
+import { getProjectById, Project, updateProject } from "../../action";
+import { projectInputLists } from "@/config/projectInput";
 
 export default function Edit() {
     const [init, setInit] = useState(false);
-    const [blog, setBlog] = useState<Blog>();
+    const [project, setProject] = useState<Project>();
     const [inputList, setInputList] = useState<InputListProps[]>([]);
-    const [mdValue, setMdValue] = useState<string>("");
 
     const params = useParams<{ id: string }>();
 
-    const mapResponseToInputList = (res: Blog) => {
-        return blogInputList.map((input) => {
-            if (input.name === "content") {
-                setMdValue(res?.content ?? "");
-            }
+    const mapResponseToInputList = (res: Project) => {
+        return projectInputLists.map((input) => {
             if (input.name === "image") {
                 return {
                     ...input,
@@ -32,16 +22,16 @@ export default function Edit() {
             }
             return {
                 ...input,
-                value: res?.[input.name as keyof Blog],
+                value: res?.[input.name as keyof Project],
             };
         });
     };
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getBlogById(params.id);
+            const res = await getProjectById(params.id);
             if (res) {
-                setBlog(res);
+                setProject(res);
                 setInputList(mapResponseToInputList(res));
             }
             setInit(true);
@@ -50,12 +40,12 @@ export default function Edit() {
         fetchData();
     }, [params.id]);
 
-    if (!blog && init) {
+    if (!project && init) {
         notFound();
     }
 
     const handleSubmit = async (formData: FormData) => {
-        await updateBlog(params.id, formData, mdValue);
+        await updateProject(params.id, formData);
     };
 
     const renderInput = (input: InputListProps) => (
@@ -63,21 +53,17 @@ export default function Edit() {
             <label htmlFor={input.name} className="mb-2 block text-md font-medium text-gray-200">
                 {input.label}
             </label>
-            {input.name === "content" ? (
-                <MdEditorCustom value={mdValue} onChange={setMdValue} />
-            ) : (
-                <input
-                    type={input.type}
-                    id={input.name}
-                    name={input.name}
-                    placeholder={input.placeholder}
-                    defaultValue={input.value}
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                    required={input.required}
-                    {...(input.type === "file" && { accept: input.accept })}
-                    {...(input.pattern && { pattern: input.pattern })}
-                />
-            )}
+            <input
+                type={input.type}
+                id={input.name}
+                name={input.name}
+                placeholder={input.placeholder}
+                defaultValue={input.value}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                required={input.required}
+                {...(input.type === "file" && { accept: input.accept })}
+                {...(input.pattern && { pattern: input.pattern })}
+            />
         </div>
     );
 

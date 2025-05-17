@@ -5,6 +5,11 @@ import LocationIcon from "@/components/SVGs/LocationIcon";
 import PhoneIcon from "@/components/SVGs/PhoneIcon";
 import Link from "next/link";
 
+/**
+ * Renders a contact page displaying email, phone, address, and social media links with icons.
+ *
+ * The component presents contact information and social profiles in two styled sections, each wrapped in a reusable bordered container for consistent layout and appearance.
+ */
 export default function Contact() {
     const contact = {
         email: "imronyusoh@outlook.com",
