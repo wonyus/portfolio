@@ -1,16 +1,20 @@
 "use client";
 import { navbarConfig } from "@/config/navbar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState("");
   const [mounted, setMounted] = useState(false);
+
+  const checkActiveLink = (href: string) => {
+    return pathname.split("/")[1] === href.replace("/", "");
+  };
 
   useEffect(() => {
     setMounted(true);
-    setCurrentPath(window.location.pathname);
   }, []);
 
   if (!mounted) return null;
@@ -22,8 +26,10 @@ const Navbar = () => {
       <Link
         href={link.href}
         className={`block py-2 pl-2 pr-2 rounded bg-none  hover:text-purple-800 hover:bg-transparen ${
-          currentPath === link.href ? "text-purple-950 dark:text-white" : "text-gray-700 dark:text-gray-300"
+          checkActiveLink(link.href) ? "text-purple-950 dark:text-white" : "text-gray-700 dark:text-gray-300"
         }`}
+        onClick={() => setIsOpen(false)} // Close menu on link click
+        aria-current={checkActiveLink(link.href) ? "page" : undefined}
       >
         {link.title}
       </Link>

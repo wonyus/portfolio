@@ -47,7 +47,7 @@ export const Card = ({ id, title, description, tags, image, sourceCodeLink, live
         ) : null;
 
     return (
-        <div className="bg-tertiary p-2 rounded-2xl w-full relative">
+        <div className="bg-tertiary p-2 rounded-2xl max-w-[300px] relative">
             {iconBtn}
             <Link href={`/${sourceCodeLink ? "projects" : "blogs"}/${id}`}>
                 <div className="bg-tertiary p-0 rounded-2xl sm:w-[280px] flex flex-col">
@@ -69,7 +69,7 @@ export const Card = ({ id, title, description, tags, image, sourceCodeLink, live
                         <p className="mt-2 text-secondary text-[14px]">{description}</p>
                     </div>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2 w-full">
                     {tags.map((tag, index) => (
                         <p key={`tag-${tag}-${index}`} className={`text-[14px] text-violet-600`}>
                             #{tag}

@@ -1,8 +1,8 @@
 "use server";
+import { Database } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { Database } from "../../../database.types";
 
 interface ProjectFormData {
     page?: string;
