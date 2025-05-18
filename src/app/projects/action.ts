@@ -1,5 +1,4 @@
 "use server";
-import { Database } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -9,7 +8,6 @@ interface ProjectFormData {
     limit?: string;
 }
 
-export type Project = Database["public"]["Tables"]["projects"]["Row"];
 
 export async function findProject(formData: ProjectFormData) {
     const { page = "1", limit = "10" } = formData;

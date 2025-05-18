@@ -1,5 +1,4 @@
 "use server";
-import { Database } from "@/types/database.types";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -47,8 +46,6 @@ export async function findBlog(formData: BlogFormData) {
     };
   }
 }
-
-export type Blog = Database["public"]["Tables"]["blogs"]["Row"];
 
 export const getBlogById = async (id: string) => {
   // create supabase client
