@@ -4,6 +4,9 @@ import remarkGfm from "remark-gfm";
 import { deleteBlog, getBlogById } from "../action";
 import { createClient } from "@/utils/supabase/server";
 import { DeleteButton } from "@/components/Buttons/DeleteButton";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { SyntaxHighlighterCopyButton } from "@/components/SyntaxHighlighter/SyntaxHighlighterWithCopy";
 
 /**
  * Renders a blog post page with Markdown content and an edit link for authenticated users.
@@ -17,31 +20,48 @@ import { DeleteButton } from "@/components/Buttons/DeleteButton";
  * @remark Redirects to a not found page if the blog post with the given ID does not exist.
  */
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    const blog = await getBlogById(id);
+  const { id } = await params;
+  const blog = await getBlogById(id);
 
-    if (!blog) {
-        notFound();
-    }
+  if (!blog) {
+    notFound();
+  }
 
-    const supabase = await createClient();
-    const user = await supabase.auth.getUser();
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-start">
-            <article className="max-w-2xl space-y-4 font-[family-name:var(--font-geist-sans)]">
-                {user.data.user !== null && (
-                    <div about="action" className="justify-items-start w-full">
-                        <a href={`/blogs/${id}/edit`}>
-                            <button className="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded mr-2">
-                                Edit
-                            </button>
-                        </a>
-                        <DeleteButton id={id} callback={deleteBlog} />
-                    </div>
-                )}
-                <h1 className="text-3xl font-bold mb-8 text-[#cecece]">{blog.title}</h1>
-                <Markdown remarkPlugins={[remarkGfm]} children={blog.content} />
-            </article>
-        </div>
-    );
+  const supabase = await createClient();
+  const user = await supabase.auth.getUser();
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-start">
+      <article className="max-w-2xl space-y-4 font-[family-name:var(--font-geist-sans)]">
+        {user.data.user !== null && (
+          <div about="action" className="justify-items-start w-full">
+            <a href={`/blogs/${id}/edit`}>
+              <button className="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
+            </a>
+            <DeleteButton id={id} callback={deleteBlog} />
+          </div>
+        )}
+        <h1 className="text-3xl font-bold mb-8 text-[#cecece]">{blog.title}</h1>
+        <Markdown
+          remarkPlugins={[remarkGfm]}
+          children={blog.content}
+          components={{
+            code(props) {
+              const { children, className, node, ...rest } = props;
+              const match = /language-(\w+)/.exec(className || "");
+              return match ? (
+                <div className="relative">
+                  <SyntaxHighlighter language={match[1]} style={nightOwl} children={String(children).replace(/\n$/, "")} PreTag="div" />
+                  <SyntaxHighlighterCopyButton text={String(children).replace(/\n$/, "")} />
+                </div>
+              ) : (
+                <code {...rest} className={className}>
+                  {children}
+                </code>
+              );
+            },
+          }}
+        />
+      </article>
+    </div>
+  );
 }

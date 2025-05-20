@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
+import { Toaster } from "@/components/AI/ui/sonner";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
                     </div>
                     <Analytics />
                 </Theme>
+                <Toaster />
             </body>
         </html>
     );

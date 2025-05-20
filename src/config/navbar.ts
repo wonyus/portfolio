@@ -13,6 +13,10 @@ export const navbarConfig = {
       href: "/blogs",
     },
     {
+      title: "AI",
+      href: "/groq",
+    },
+    {
       title: "Contact",
       href: "/contact",
     },
