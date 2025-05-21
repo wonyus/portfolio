@@ -22,6 +22,7 @@
       "@/*": ["./src/*"],
       "@/lib/*": ["./lib/*"],
       "@/types/*": ["./types/*"],
+      "@/ai/*": ["./ai/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/constant/IconLink.tss"],

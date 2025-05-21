@@ -90,7 +90,7 @@ const Blogs = () => {
       <h2 className="text-4xl font-bold text-center">
         My <span className="text-[#915eff]">Blogs</span>
       </h2>
-      <p className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px] text-center mx-auto">
+      <p className="mt-4 text-primary text-[17px] max-w-3xl leading-[30px] text-center mx-auto">
         Following blogs showcase my skills and experience through real-world examples of my work. Each blog is briefly described with links to code
         repositories and live demos.
       </p>
