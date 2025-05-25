@@ -1,5 +1,5 @@
 "use server";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseServer } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 interface BlogFormData {
@@ -14,7 +14,7 @@ export async function findBlog(formData: BlogFormData) {
   const skip = (parsedPage - 1) * parsedLimit;
   const end = skip + parsedLimit - 1;
 
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
 
   try {
     const { data: blogs, count } = await supabase
@@ -49,7 +49,7 @@ export async function findBlog(formData: BlogFormData) {
 
 export const getBlogById = async (id: string) => {
   // create supabase client
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
   // get blog by id
   const { data, error } = await supabase.from("blogs").select("*").eq("id", id).single();
 
@@ -64,7 +64,7 @@ export const getBlogById = async (id: string) => {
 };
 
 export async function createBlog(formData: FormData, content: string) {
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
@@ -112,7 +112,7 @@ export async function createBlog(formData: FormData, content: string) {
 }
 
 export async function updateBlog(id: string, formData: FormData, content: string) {
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
@@ -156,7 +156,7 @@ export async function updateBlog(id: string, formData: FormData, content: string
 }
 
 export async function deleteBlog(id: string) {
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
   const { status } = await supabase.from("blogs").delete().eq("id", id);
 
   if (status !== 204) {

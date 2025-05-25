@@ -1,5 +1,5 @@
 "use server";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseServer } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -16,7 +16,7 @@ export async function findProject(formData: ProjectFormData) {
     const skip = (parsedPage - 1) * parsedLimit;
     const end = skip + parsedLimit - 1;
 
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
 
     try {
         const { data: projects, count } = await supabase
@@ -52,7 +52,7 @@ export async function findProject(formData: ProjectFormData) {
 
 export const getProjectById = async (id: string) => {
     // create supabase client
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
 
     // get blog by id
     const { data, error } = await supabase.from("projects").select("*,users(name)").eq("id", id).single();
@@ -67,7 +67,7 @@ export const getProjectById = async (id: string) => {
 };
 
 export async function createProject(formData: FormData) {
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
 
     const { data: userData, error } = await supabase.auth.getUser();
     if (error) {
@@ -134,7 +134,7 @@ export async function createProject(formData: FormData) {
 
 export async function updateProject(id: string, formData: FormData) {
     const now = new Date();
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
 
     const { data: userData, error } = await supabase.auth.getUser();
     if (error) {
@@ -191,7 +191,7 @@ export async function updateProject(id: string, formData: FormData) {
 }
 
 export async function deleteProject(id: string) {
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
     const { status } = await supabase.from("projects").delete().eq("id", id);
 
     if (status !== 204) {

@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { CardProps, Card } from "@/components/Card/Card";
 import { findProject } from "./action";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { projectPagination } from "@/config/pagination";
 
 const Projects = () => {
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
   const [user, setUser] = useState<User | null>(null);
 
   const [activeFilter, setActiveFilter] = useState("All");

@@ -8,6 +8,7 @@ import GithubIcon from "@/components/SVGs/GithubIcon";
 import { findBlog, findProject } from "./action";
 import BlogSection from "@/components/Sections/BlogSection";
 import ProjectSection from "@/components/Sections/ProjectSection";
+import { useConfig } from "./contexts/configs";
 
 /**
  * Renders the personal portfolio homepage, displaying the user's name, social links, career path, technology stack, and GitHub contribution calendar.
@@ -15,6 +16,8 @@ import ProjectSection from "@/components/Sections/ProjectSection";
  * The page is structured with distinct sections for career history, technology stack, and GitHub activity, using imported data and components for dynamic rendering.
  */
 export default function Home() {
+    // const configs = useConfig();
+
     const MapCareerPath = ({ carreerPath }: { carreerPath: CarreerPath[] }) => {
         const careerCard = (career: CarreerPath, index: number) => {
             return (

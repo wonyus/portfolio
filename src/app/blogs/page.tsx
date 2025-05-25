@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { CardProps, Card } from "@/components/Card/Card";
 import { findBlog } from "./action";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { blogPagination } from "@/config/pagination";
 
 const Blogs = () => {
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
   const [user, setUser] = useState<User | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
   const [filteredBlogs, setFilteredBlogs] = useState<CardProps[]>([]);

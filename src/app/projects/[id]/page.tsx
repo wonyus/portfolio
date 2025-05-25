@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { deleteProject, getProjectById } from "../action";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseServer } from "@/utils/supabase/server";
 import { DeleteButton } from "@/components/Buttons/DeleteButton";
 
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +10,7 @@ export default async function Post({ params }: { params: Promise<{ id: string }>
     if (!project) {
         notFound();
     }
-    const supabase = await createClient();
+    const supabase = await useSupabaseServer();
     const user = await supabase.auth.getUser();
 
     return (

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { deleteBlog, getBlogById } from "../action";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseServer } from "@/utils/supabase/server";
 import { DeleteButton } from "@/components/Buttons/DeleteButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -27,7 +27,7 @@ export default async function Post({ params }: { params: Promise<{ id: string }>
     notFound();
   }
 
-  const supabase = await createClient();
+  const supabase = await useSupabaseServer();
   const user = await supabase.auth.getUser();
   return (
     <div className="min-h-screen flex flex-col items-center justify-start">
